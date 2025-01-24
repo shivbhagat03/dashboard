@@ -1,15 +1,23 @@
-import dash #type: ignore
-from layout import create_layout  #type: ignore
-from callbacks import register_callbacks  #type: ignore
+import os
+from dotenv import load_dotenv
 
-# Initialize the Dash app
-app = dash.Dash(__name__)
+load_dotenv()
 
-# Create the layout
-create_layout(app)
+# InfluxDB Configuration
+INFLUXDB_TOKEN = os.getenv("INFLUXDB_TOKEN")
+if not INFLUXDB_TOKEN:
+    raise ValueError("INFLUXDB_TOKEN environment variable is not set")
 
-# Register callbacks
-register_callbacks(app)
+INFLUX_CONFIG = {
+    'token': INFLUXDB_TOKEN,
+    'org': "test",
+    'bucket': "newdataset",
+    'url': "http://localhost:8086"
+}
 
-if __name__ == '__main__':
-    app.run_server(debug=True)
+# Fields configuration
+FIELDS = [
+    "T1", "T2", "T3", "T4", "T5",
+    "RH_1", "RH_2", "RH_3", "RH_4", "RH_5",
+    "T_out", "RH_out", "windspeed", "Visibility"
+]
