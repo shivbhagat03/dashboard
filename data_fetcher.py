@@ -3,7 +3,7 @@ from influxdb_client import InfluxDBClient
 from config import INFLUX_CONFIG
 
 def fetch_data(field, start_time=None, end_time=None):
-    # Append 'Z' to timestamps if not present
+   
     if start_time and not start_time.endswith("Z"):
         start_time += "Z"
     if end_time and not end_time.endswith("Z"):
